@@ -1,0 +1,89 @@
+Neural Networks Overview
+	z=wx+b -> a = sigmoid(z) = L(a,y) == L(y_hat,y)
+	Different than logistic regression because layers are stacked
+		This means the above formula is performed multiple times for each layer
+		Finally end up at loss function
+		Taking logistic regression and performing it multiple times
+	Neural Network Representation
+		Going over a single hidden layer network or 2 layer NN (hidden & output, do not count input)
+		input layer, hidden layer, output layer
+		a^[0] == x
+			activations in input layer
+		a^[1] in hidden layer
+		w,b are in hidden and output layers
+			w refers to nodes in hidden layer
+			b refers to input layer nodes
+	Computing a Neural Network's Output
+		Computing prediction on a NN given a single training example
+		For input layer, computer z, then a, then that becomes  y_hat
+		convention for hidden layer nodes:
+			a^l_i
+				l=layer
+				i=node in layer
+	Vectorizing Across Multiple Examples
+		Vectorizing across multiple training examples
+		One hidden layer NN - vectorizing across multiple examples
+		a[layer](example)
+	Explanation for Vectorized Implementation
+		explained more in depth of the previous video
+	Activation Functions
+		functions to use in hidden layers and output units
+		so far just used sigmoid functions => 1/(e^-z)
+		hyperbolic tangent function 
+			tanh(z) function
+			shifted version of sigmoid function
+			Almost always works better than sigmoid function
+				closer to 0 mean to help center data
+				makes learning for next layer easier
+			exception is output layer
+				y = {0,1} then sigmoid is better because the line goes between 0 & 1
+				better for binary classification
+			Could have tanh for hidden layer and sigmoid for output layer
+		relu function
+			a=max(0,z)
+			most commonly used 
+		sigmoid for binary classification
+		for all other units ReLU is default
+			Just use ReLU if not sure what to use for hidden layer
+		leaky ReLU exists
+			not used as much in practice
+			a=max(0.01z,z)
+		try them all if you are not sure which one is best
+	Why Do You Need Non-Linear Activation Functions
+		Why do you need to use sigmoid or relu?
+		Does not work for deep NNs
+		linear hidden layer is useless
+		Only reason may be for regression
+			e.g.: house pricing
+			hidden layers still use nonlinear
+			relu may still be better since nothing is negative with relu
+	Derivatives of activation functions
+		For back propogation
+		derivatives of sigmoid, relu, tanh, leaky relu
+	Gradient descent for NNs
+		have parrameters, w,b
+		cost function = average of loss function l(yhat,y)
+		gradient descent
+			repeat:
+				compute predictions yhat
+				computer derivatives dw = dj/dw, db = dj/db
+				update w1 = w1-alpha*dw1 
+		forward propogation
+			z1=w1x+b1
+			a1=g1(z1)
+			z2=w2a1+b2
+			a2=g2(z2)
+		back propogation
+			dz2=a2-Y (Y=y1,y2,...ym) 1 x m matrix
+			dw2 = 1/m * dZ AT
+			db2=1/m np.sum(dZ, axis=1, keepdims=True) keepdims makes the array not be rank 1 and keeps the dimensions n x 1
+			dZ1 = W2TdZ2 * g1'(Z1) 
+				element wise product
+				n1 x m matrix
+			dW1 = 1/m dZ * XT
+			db1 = 1/m np.sum(dZ1,axis=1,keepdims=true)
+	Random initialization
+		if initialized to 0, then all the hidden layers are computing the same thing due to symmetry
+			
+				
+		
